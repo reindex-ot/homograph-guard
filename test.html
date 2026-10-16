@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Homograph Guard 動作確認テスト（主要サービス網羅版）</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      max-width: 900px;
+      margin: 36px auto;
+      padding: 0 24px;
+      line-height: 1.6;
+      color: #24292f;
+      background-color: #fafbfc;
+    }
+    h1 {
+      border-bottom: 2px solid #0969da;
+      padding-bottom: 10px;
+      color: #1f2328;
+    }
+    .lead {
+      font-size: 15px;
+      color: #57606a;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(31,35,40,0.04);
+    }
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: #0969da;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #d0d7de;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    th {
+      background-color: #f6f8fa;
+      font-weight: 600;
+    }
+    .service-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      background: #eaeef2;
+      color: #444;
+    }
+    .test-link {
+      font-family: monospace;
+      font-size: 14px;
+      word-break: break-all;
+    }
+    .trick-note {
+      font-size: 12px;
+      color: #cf222e;
+      font-weight: 500;
+    }
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      box-sizing: border-box;
+      margin-top: 6px;
+      font-size: 14px;
+      font-family: monospace;
+    }
+    code {
+      background: #eff1f3;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🛡️ Homograph Guard 動作確認テスト</h1>
+  <p class="lead">
+    Google以外の実在する主要サービス（Amazon, PayPal, Apple, Microsoft, Netflixなど）を模したホモグラフ攻撃のテストリンク集です。<br>
+    拡張機能が有効な場合、<strong>偽装URLは赤枠強調・警告バッジが付き、クリックすると警告モーダルで遮断</strong>されます。
+  </p>
+
+  <!-- 1. ショッピング・EC・金融系 -->
+  <div class="card">
+    <h2>💳 1. 金融・決済・EC系（フィッシング詐欺が多発する標的）</h2>
+    <p>見た目は完全に本物に見えますが、キリル文字（Cyrillic）やギリシャ文字が巧妙に混入されています。</p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 18%;">サービス</th>
+          <th style="width: 42%;">テストリンク（クリックで遮断確認）</th>
+          <th style="width: 40%;">仕掛けられたトリック</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="service-badge">PayPal</span></td>
+          <td><a class="test-link" href="https://payрal.com/signin">https://payрal.com/signin</a></td>
+          <td class="trick-note">2つ目の 'p' がキリル文字 <code>р</code> (U+0440)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">PayPal（高度）</span></td>
+          <td><a class="test-link" href="https://раураl.com/">https://раураl.com/</a></td>
+          <td class="trick-note">'p','a','y' 全てキリル文字 <code>р</code>,<code>а</code>,<code>у</code></td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Amazon</span></td>
+          <td><a class="test-link" href="https://amazоn.com/orders">https://amazоn.com/orders</a></td>
+          <td class="trick-note">'o' がキリル文字 <code>о</code> (U+043E)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Amazon</span></td>
+          <td><a class="test-link" href="https://аmаzon.com/">https://аmаzon.com/</a></td>
+          <td class="trick-note">2つの 'a' がキリル文字 <code>а</code> (U+0430)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">eBay</span></td>
+          <td><a class="test-link" href="https://еbay.com/">https://еbay.com/</a></td>
+          <td class="trick-note">'e' がキリル文字 <code>е</code> (U+0435)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 2. IT・クラウド・ストリーミング系 -->
+  <div class="card">
+    <h2>💻 2. IT大手・クラウド・動画配信サービス</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 18%;">サービス</th>
+          <th style="width: 42%;">テストリンク（クリックで遮断確認）</th>
+          <th style="width: 40%;">仕掛けられたトリック</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="service-badge">Apple</span></td>
+          <td><a class="test-link" href="https://аpple.com/icloud">https://аpple.com/icloud</a></td>
+          <td class="trick-note">'a' がキリル文字 <code>а</code> (U+0430)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Apple</span></td>
+          <td><a class="test-link" href="https://applе.com/">https://applе.com/</a></td>
+          <td class="trick-note">末尾の 'e' がキリル文字 <code>е</code> (U+0435)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Microsoft</span></td>
+          <td><a class="test-link" href="https://micrоsоft.com/">https://micrоsоft.com/</a></td>
+          <td class="trick-note">2つの 'o' がキリル文字 <code>о</code> (U+043E)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Microsoft</span></td>
+          <td><a class="test-link" href="https://mіcrosoft.com/login">https://mіcrosoft.com/login</a></td>
+          <td class="trick-note">'i' がウクライナ/キリル文字 <code>і</code> (U+0456)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Netflix</span></td>
+          <td><a class="test-link" href="https://netflіх.com/">https://netflіх.com/</a></td>
+          <td class="trick-note">'i' が <code>і</code> (U+0456)、'x' が <code>х</code> (U+0445)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Spotify</span></td>
+          <td><a class="test-link" href="https://spоtify.com/">https://spоtify.com/</a></td>
+          <td class="trick-note">'o' がキリル文字 <code>о</code> (U+043E)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3. SNS・コミュニケーション系 -->
+  <div class="card">
+    <h2>💬 3. SNS・検索・コミュニケーション系</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 18%;">サービス</th>
+          <th style="width: 42%;">テストリンク（クリックで遮断確認）</th>
+          <th style="width: 40%;">仕掛けられたトリック</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="service-badge">Facebook</span></td>
+          <td><a class="test-link" href="https://fаcebook.com/recover">https://fаcebook.com/recover</a></td>
+          <td class="trick-note">'a' がキリル文字 <code>а</code> (U+0430)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Instagram</span></td>
+          <td><a class="test-link" href="https://instаgrаm.com/">https://instаgrаm.com/</a></td>
+          <td class="trick-note">'a' がキリル文字 <code>а</code> (U+0430)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Yahoo!</span></td>
+          <td><a class="test-link" href="https://уahoo.com/">https://уahoo.com/</a></td>
+          <td class="trick-note">'y' がキリル文字 <code>у</code> (U+0443)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Google</span></td>
+          <td><a class="test-link" href="https://gооgle.com/">https://gооgle.com/</a></td>
+          <td class="trick-note">2つの 'o' がキリル文字 <code>о</code> (U+043E)</td>
+        </tr>
+        <tr>
+          <td><span class="service-badge">Punycode</span></td>
+          <td><a class="test-link" href="https://xn--appl-43d.com/">https://xn--appl-43d.com/</a></td>
+          <td class="trick-note">Punycode (国際化ドメイン名)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. 正常なURL（誤検知がないかの比較用） -->
+  <div class="card">
+    <h2>✅ 4. 正規のリンク（誤検知・ハイライトされないことの確認）</h2>
+    <p>すべて通常の半角英数字です。<strong>枠線やバッジが付かず、クリック時に警告が出ない</strong>ことを確認してください。</p>
+    <ul>
+      <li><a class="test-link" href="https://www.amazon.co.jp/">https://www.amazon.co.jp/</a> （正常）</li>
+      <li><a class="test-link" href="https://www.apple.com/jp/">https://www.apple.com/jp/</a> （正常）</li>
+      <li><a class="test-link" href="https://www.microsoft.com/ja-jp/">https://www.microsoft.com/ja-jp/</a> （正常）</li>
+      <li><a class="test-link" href="https://www.paypal.com/jp/">https://www.paypal.com/jp/</a> （正常）</li>
+    </ul>
+  </div>
+
+  <!-- 5. コピー＆ペーストテスト -->
+  <div class="card">
+    <h2>📋 5. コピー＆ペースト警告テスト</h2>
+    <p>以下のテキストをドラッグ選択して <code>Ctrl + C</code>、または下の枠に <code>Ctrl + V</code> して、右下にトースト警告が出るか試してください。</p>
+
+    <label><strong>コピー用（Amazon偽装）:</strong></label>
+    <textarea rows="2" readonly>注文履歴はこちら: https://amazоn.com/orders (※oがキリル文字)</textarea>
+
+    <br><br>
+    <label><strong>コピー用（PayPal偽装）:</strong></label>
+    <textarea rows="2" readonly>本人確認の通知: https://payрal.com/verify (※pがキリル文字)</textarea>
+
+    <br><br>
+    <label><strong>ペースト検証用入力欄:</strong></label>
+    <input type="text" placeholder="ここに偽装URLをペーストすると警告トーストが表示されます">
+  </div>
+</body>
+</html>
