@@ -1,4 +1,3 @@
-/* 疑わしいリンクのハイライト */
 .hg-suspicious-link {
   outline: 2px dashed #e60000 !important;
   outline-offset: 2px !important;
